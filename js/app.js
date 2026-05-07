@@ -126,8 +126,8 @@ function saveApiKey() {
     return;
   }
 
-  if (!key.startsWith('sk-ant-')) {
-    status.textContent = '格式错误：API Key 应以 sk-ant- 开头';
+  if (!key.startsWith('sk-')) {
+    status.textContent = '格式错误：API Key 应以 sk- 开头';
     status.style.color = '#e53935';
     return;
   }

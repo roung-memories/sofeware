@@ -1,8 +1,8 @@
 /* ============================================
-   Client-side Anthropic API + Markdown renderer
+   AI - DeepSeek V4 API + Markdown renderer
    ============================================ */
 
-// ── Topics (mirrors Python ai_service.py) ──
+// ── Topics (personal growth / emotional well-being) ──
 
 const AI_TOPICS = [
   'personal growth, self-improvement, and lifelong learning',
@@ -46,45 +46,35 @@ OUTPUT FORMAT (markdown):
 
 (3-4 questions)`;
 
-// ── Anthropic API call ──
+// ── DeepSeek V4 API call ──
 
-async function callAnthropicAPI(apiKey) {
+async function callAIAPI(apiKey) {
   const topic = AI_TOPICS[Math.floor(Math.random() * AI_TOPICS.length)];
   const today = new Date().toISOString().split('T')[0];
 
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
+  const response = await fetch('https://api.deepseek.com/chat/completions', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01',
+      'Authorization': `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
+      model: 'deepseek-v4-flash',
       max_tokens: 4096,
-      system: [
-        {
-          type: 'text',
-          text: AI_SYSTEM_PROMPT,
-          cache_control: { type: 'ephemeral' },
-        },
-      ],
       messages: [
-        {
-          role: 'user',
-          content: `Generate today's Chinese reading passage on the theme: ${topic}. Today's date: ${today}.`,
-        },
+        { role: 'system', content: AI_SYSTEM_PROMPT },
+        { role: 'user', content: `Generate today's Chinese reading passage on the theme: ${topic}. Today's date: ${today}.` },
       ],
     }),
   });
 
   if (!response.ok) {
     const body = await response.text().catch(() => '');
-    throw new Error(`Anthropic API ${response.status}: ${body || response.statusText}`);
+    throw new Error(`DeepSeek API ${response.status}: ${body || response.statusText}`);
   }
 
   const data = await response.json();
-  const rawMd = data.content[0].text;
+  const rawMd = data.choices[0].message.content;
 
   // Extract title (first ## line)
   const titleLine = rawMd.split('\n')[0].replace(/^#+\s*/, '').trim();
@@ -139,11 +129,8 @@ function renderMarkdown(md) {
   }
 
   function renderInline(text) {
-    // Escape HTML, then handle **bold** and `inline code`
     let escaped = escapeHtml(text);
-    // **bold** → <strong>
     escaped = escaped.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-    // `inline code` → <code>
     escaped = escaped.replace(/`([^`]+)`/g, '<code>$1</code>');
     return escaped;
   }
@@ -151,7 +138,6 @@ function renderMarkdown(md) {
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
 
-    // Code block toggle
     if (line.trim().startsWith('```')) {
       if (inCodeBlock) {
         html.push('<pre><code>' + codeBlockContent.join('\n') + '</code></pre>\n');
@@ -169,10 +155,8 @@ function renderMarkdown(md) {
       continue;
     }
 
-    // Empty line
     if (line.trim() === '') {
       if (inTable) {
-        // End table
         html.push(renderTable(tableRows));
         tableRows = [];
         inTable = false;
@@ -181,14 +165,12 @@ function renderMarkdown(md) {
       continue;
     }
 
-    // Table row
     if (line.trim().startsWith('|') && line.trim().endsWith('|')) {
       const cells = line
         .split('|')
         .slice(1, -1)
         .map((c) => c.trim());
 
-      // Skip separator row (e.g., |---|---|)
       if (cells.length > 0 && cells[0].includes('-')) {
         continue;
       }
@@ -201,7 +183,6 @@ function renderMarkdown(md) {
       continue;
     }
 
-    // Heading (must be at start of line)
     const h2Match = line.match(/^##\s+(.+)/);
     const h3Match = line.match(/^###\s+(.+)/);
     if (h2Match) {
@@ -215,12 +196,10 @@ function renderMarkdown(md) {
       continue;
     }
 
-    // Regular text → paragraph
     startParagraph();
     html.push(renderInline(line));
   }
 
-  // Flush remaining
   if (inCodeBlock) {
     html.push('<pre><code>' + codeBlockContent.join('\n') + '</code></pre>\n');
   }
