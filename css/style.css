@@ -1,0 +1,699 @@
+/* ============================================
+   Chinese Reader - Mobile-first Styles
+   ============================================ */
+
+/* Reset & Base */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Noto Sans SC', 'Microsoft YaHei', 'PingFang SC',
+                 'Hiragino Sans GB', 'WenQuanYi Micro Hei', sans-serif;
+    margin: 0;
+    padding: 0 16px 80px 16px; /* bottom nav + safe area */
+    background: #fafafa;
+    color: #1a1a1a;
+    line-height: 1.8;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+/* Header */
+header {
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+header h1 {
+    font-size: 1.15em;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+/* Pages */
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+/* Loading */
+.loading {
+    text-align: center;
+    padding: 40px 0;
+    color: #888;
+}
+
+.loading::after {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    margin-left: 8px;
+    border: 3px solid #ddd;
+    border-top-color: #2c3e50;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Error */
+.error-box {
+    background: #fff0f0;
+    border: 1px solid #ffcdd2;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 16px 0;
+    color: #c62828;
+}
+
+.error-box .error-detail {
+    font-size: 0.85em;
+    margin-top: 8px;
+    color: #888;
+}
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #888;
+}
+
+.empty-state p {
+    margin: 8px 0;
+}
+
+/* Material Content */
+.material-header {
+    margin-bottom: 16px;
+}
+
+.material-header h2 {
+    font-size: 1.3em;
+    color: #1a1a1a;
+    line-height: 1.4;
+}
+
+.material-meta {
+    font-size: 0.82em;
+    color: #888;
+    margin-top: 4px;
+}
+
+.material-content {
+    font-size: 1.05em;
+    line-height: 2.0;
+}
+
+.material-content h2 {
+    font-size: 1.2em;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 4px;
+    margin-top: 24px;
+    margin-bottom: 10px;
+}
+
+.material-content h3 {
+    font-size: 1.05em;
+    margin-top: 18px;
+    margin-bottom: 6px;
+}
+
+.material-content p {
+    text-indent: 2em;
+    margin: 0.7em 0;
+}
+
+.material-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+    font-size: 0.92em;
+}
+
+.material-content th,
+.material-content td {
+    border: 1px solid #ddd;
+    padding: 6px 8px;
+    text-align: left;
+}
+
+.material-content th {
+    background: #f0f0f0;
+    font-weight: 600;
+}
+
+.material-content strong {
+    font-weight: 700;
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    font-family: inherit;
+    transition: background 0.2s, opacity 0.2s;
+    min-height: 44px;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-primary {
+    background: #2c3e50;
+    color: #fff;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: #1a2a3a;
+}
+
+.btn-danger {
+    background: #e53935;
+    color: #fff;
+}
+
+.btn-danger:hover:not(:disabled) {
+    background: #c62828;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid #ccc;
+    color: #555;
+}
+
+.btn-outline:hover:not(:disabled) {
+    background: #f0f0f0;
+}
+
+/* Recording button */
+.btn-record {
+    background: #e53935;
+    color: #fff;
+    padding: 12px 28px;
+    font-size: 1.05em;
+}
+
+.btn-record:hover:not(:disabled) {
+    background: #c62828;
+}
+
+.btn-record.recording {
+    animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0.5); }
+    50% { box-shadow: 0 0 0 14px rgba(229, 57, 53, 0); }
+}
+
+/* Actions bar */
+.actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 20px 0;
+    padding: 16px 0;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+/* Recordings List */
+.recordings-section {
+    margin-top: 20px;
+}
+
+.recordings-section h3 {
+    font-size: 1.05em;
+    color: #333;
+    margin-bottom: 12px;
+}
+
+.recordings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.recording-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    min-height: 44px;
+    transition: background 0.2s;
+}
+
+.recording-item:hover {
+    background: #f8f8f8;
+}
+
+.recording-item .rec-time {
+    color: #888;
+    font-size: 0.85em;
+    min-width: 40px;
+    font-variant-numeric: tabular-nums;
+}
+
+.recording-item .rec-date {
+    color: #888;
+    font-size: 0.85em;
+    flex: 1;
+}
+
+.recording-item .rec-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* Play button */
+.btn-play {
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 50%;
+    background: #2c3e50;
+    color: #fff;
+    cursor: pointer;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.btn-play:hover {
+    background: #1a2a3a;
+}
+
+.btn-play.playing {
+    background: #e53935;
+}
+
+/* Icon button (delete, etc) */
+.btn-icon {
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    cursor: pointer;
+    font-size: 0.95em;
+    color: #888;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.btn-icon:hover {
+    background: #f0f0f0;
+    color: #e53935;
+}
+
+/* History List */
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.history-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    text-decoration: none;
+    color: inherit;
+    min-height: 44px;
+}
+
+.history-item:hover {
+    background: #f8f8f8;
+    border-color: #ccc;
+}
+
+.history-item .hist-date {
+    font-size: 0.85em;
+    color: #2c3e50;
+    font-weight: 600;
+    min-width: 80px;
+}
+
+.history-item .hist-title {
+    flex: 1;
+    font-size: 0.92em;
+    line-height: 1.4;
+}
+
+.history-item .hist-meta {
+    font-size: 0.78em;
+    color: #888;
+    white-space: nowrap;
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding-bottom: 8px;
+}
+
+.pagination button {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 4px 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.9em;
+}
+
+.pagination button:hover:not(:disabled) {
+    background: #f0f0f0;
+}
+
+.pagination button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.pagination button.active-page {
+    background: #2c3e50;
+    color: #fff;
+    border-color: #2c3e50;
+}
+
+/* Back link */
+.back-link {
+    display: inline-block;
+    margin-bottom: 16px;
+    color: #2c3e50;
+    text-decoration: none;
+    font-size: 0.9em;
+    min-height: 44px;
+    line-height: 44px;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+/* ============================================
+   Bottom Navigation Bar
+   ============================================ */
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    background: #ffffff;
+    border-top: 1px solid #e0e0e0;
+    z-index: 1000;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+    height: calc(60px + env(safe-area-inset-bottom, 0));
+}
+
+.bottom-nav a {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #888;
+    font-size: 0.72em;
+    min-height: 44px;
+    gap: 2px;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.bottom-nav a.active {
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.bottom-nav .nav-icon {
+    font-size: 1.4em;
+    line-height: 1;
+}
+
+.bottom-nav .nav-label {
+    line-height: 1;
+}
+
+/* ============================================
+   Recording Bar (sticky bottom)
+   ============================================ */
+
+.recording-bar {
+    position: fixed;
+    bottom: calc(60px + env(safe-area-inset-bottom, 0));
+    left: 0;
+    right: 0;
+    background: #e53935;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    z-index: 999;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.15);
+}
+
+.recording-bar.active {
+    transform: translateY(0);
+}
+
+.recording-bar-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.recording-dot {
+    width: 10px;
+    height: 10px;
+    background: #fff;
+    border-radius: 50%;
+    animation: rec-blink 1s infinite;
+}
+
+@keyframes rec-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+.recording-bar-timer {
+    font-size: 1em;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    min-width: 4ch;
+}
+
+.recording-bar-label {
+    font-size: 0.82em;
+    opacity: 0.9;
+}
+
+.btn-stop-rec {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.2s;
+}
+
+.btn-stop-rec:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.btn-stop-rec:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.stop-icon {
+    font-size: 0.7em;
+}
+
+/* ============================================
+   Toast
+   ============================================ */
+
+.toast {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 0.9em;
+    z-index: 9999;
+    transition: opacity 0.3s;
+    max-width: 90vw;
+    text-align: center;
+    pointer-events: none;
+}
+
+.toast.hidden {
+    opacity: 0;
+}
+
+.toast.error {
+    background: #c62828;
+}
+
+.toast.success {
+    background: #2e7d32;
+}
+
+/* ============================================
+   Settings button (header)
+   ============================================ */
+
+.btn-settings {
+    background: none;
+    border: none;
+    font-size: 1.2em;
+    cursor: pointer;
+    padding: 4px 8px;
+    min-height: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: background 0.2s;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.btn-settings:hover {
+    background: #e8e8e8;
+}
+
+/* ============================================
+   Settings Modal
+   ============================================ */
+
+.settings-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s;
+}
+
+.settings-overlay.hidden {
+    display: none;
+}
+
+.settings-modal {
+    background: #fff;
+    border-radius: 12px;
+    padding: 24px;
+    width: 90%;
+    max-width: 360px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.settings-modal h2 {
+    font-size: 1.2em;
+    margin-bottom: 8px;
+    color: #1a1a1a;
+}
+
+.settings-modal input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.settings-modal input:focus {
+    outline: none;
+    border-color: #2c3e50;
+}
+
+/* ============================================
+   Desktop breakpoint
+   ============================================ */
+
+@media (min-width: 768px) {
+    body {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 24px 24px 24px;
+    }
+
+    header h1 {
+        font-size: 1.4em;
+    }
+
+    .toast {
+        bottom: 24px;
+    }
+}
