@@ -13,7 +13,7 @@ async function renderTodayPage() {
         renderTodayContent(container, material);
     } catch (err) {
         // No material for today yet
-        if (err.message.includes('404')) {
+        if (err.status === 404) {
             container.innerHTML = `
                 <div class="empty-state">
                     <h2>今日朗读</h2>
