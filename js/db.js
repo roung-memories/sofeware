@@ -69,6 +69,10 @@ const DB = (() => {
             const countReq = store.count();
             countReq.onsuccess = () => {
               const total = countReq.result;
+              if (total === 0) {
+                resolve({ items: [], total: 0 });
+                return;
+              }
               const items = [];
               let skipped = 0;
               const skip = (page - 1) * perPage;
@@ -76,17 +80,17 @@ const DB = (() => {
               const cursorReq = idx.openCursor(null, 'prev');
               cursorReq.onsuccess = () => {
                 const cursor = cursorReq.result;
-                if (cursor) {
-                  if (skipped < skip) {
-                    skipped++;
-                    cursor.continue();
-                  } else if (items.length < perPage) {
-                    items.push(cursor.value);
-                    cursor.continue();
-                  }
+                if (!cursor) {
+                  resolve({ items, total });
+                  return;
                 }
-                // Resolve when cursor is done or we have enough
-                if (!cursorReq.result || items.length >= perPage) {
+                if (skipped < skip) {
+                  skipped++;
+                  cursor.continue();
+                } else if (items.length < perPage) {
+                  items.push(cursor.value);
+                  cursor.continue();
+                } else {
                   resolve({ items, total });
                 }
               };
