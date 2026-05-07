@@ -135,7 +135,11 @@ function saveApiKey() {
   localStorage.setItem('anthropic_api_key', key);
   status.textContent = '已保存';
   status.style.color = '#2e7d32';
-  setTimeout(hideSettings, 800);
+  setTimeout(() => {
+    hideSettings();
+    // Re-render today page so the generate button shows up
+    router();
+  }, 800);
 }
 
 // Close settings on overlay click
