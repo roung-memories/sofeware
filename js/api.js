@@ -1,5 +1,5 @@
 /* ============================================
-   Data API - IndexedDB + Anthropic API client
+   Data API - IndexedDB + AI API client
    ============================================ */
 
 const API = (() => {
@@ -33,8 +33,8 @@ const API = (() => {
         await DB.materials.delete(existing.id);
       }
 
-      // 2. Generate via Anthropic API
-      const data = await callAnthropicAPI(apiKey);
+      // 2. Generate via AI API
+      const data = await callAIAPI(apiKey);
 
       // 3. Save to IndexedDB
       const created = await DB.materials.create({
