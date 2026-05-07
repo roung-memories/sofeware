@@ -103,8 +103,12 @@ function showSettings() {
   overlay.classList.remove('hidden');
   const input = document.getElementById('settings-api-key');
   input.value = localStorage.getItem('anthropic_api_key') || '';
-  input.focus();
   document.getElementById('settings-status').textContent = '';
+  // Small delay: let the overlay render, then scroll save button into view
+  setTimeout(() => {
+    input.focus();
+    document.getElementById('btn-save-key').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 300);
 }
 
 function hideSettings() {

@@ -642,10 +642,20 @@ header h1 {
     align-items: center;
     justify-content: center;
     transition: opacity 0.2s;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .settings-overlay.hidden {
     display: none;
+}
+
+/* On mobile, start from the top so the button stays visible with keyboard */
+@media (max-width: 480px) {
+    .settings-overlay {
+        align-items: flex-start;
+        padding: 24px 0 120px 0;
+    }
 }
 
 .settings-modal {
