@@ -18,7 +18,7 @@ async function renderTodayPage() {
                 <div class="empty-state">
                     <h2>今日朗读</h2>
                     <p>还没有今日的朗读素材</p>
-                    <p style="font-size:0.85em;color:#aaa;">每次生成约 7 分钟的朗读内容</p>
+                    <p style="font-size:0.85em;color:#aaa;">每次生成约 4-5 分钟的朗读内容</p>
                     <button class="btn btn-primary" onclick="generateTodayMaterial()" id="btn-generate">
                         生成今日素材
                     </button>
