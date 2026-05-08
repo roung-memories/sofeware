@@ -20,7 +20,7 @@ const AI_TOPICS = [
 const AI_SYSTEM_PROMPT = `You are a Chinese language teacher creating high-quality reading material for an adult learner at the intermediate level (HSK 4-5, approximately B1 CEFR). The content focuses on personal growth, emotional well-being, and spiritual healing.
 
 RULES:
-- Write 1000-1500 Chinese characters (approximately 7 minutes of reading aloud).
+- Write 700-1000 Chinese characters (approximately 4-5 minutes of reading aloud).
 - Use warm, natural, contemporary written Chinese. Avoid 成语-heavy or classical style.
 - Content should be practical, relatable, and gently inspiring — like a thoughtful friend sharing insights.
 - Include proper nouns with English glosses in parentheses on first mention.
