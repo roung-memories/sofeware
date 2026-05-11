@@ -127,6 +127,7 @@ function renderRecordings(listEl, recordings) {
                 <div class="rec-actions">
                     <button class="btn-play" data-recording-id="${r.id}"
                             onclick="togglePlay(${r.id}, '${API.getAudioUrl(r.id)}')">▶</button>
+                    <button class="btn-icon" onclick="downloadRecording(${r.id})" title="下载">⬇</button>
                     <button class="btn-icon" onclick="deleteRecording(${r.id})" title="删除">✕</button>
                 </div>
             </div>
@@ -143,6 +144,14 @@ function formatFileSize(bytes) {
 
 function togglePlay(recordingId, audioUrl) {
     player.play(recordingId, audioUrl);
+}
+
+async function downloadRecording(recordingId) {
+    try {
+        await API.downloadRecording(recordingId);
+    } catch (err) {
+        showToast('下载失败：' + err.message, 'error');
+    }
 }
 
 async function deleteRecording(recordingId) {

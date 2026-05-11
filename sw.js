@@ -1,4 +1,4 @@
-const CACHE_NAME = 'chinese-reader-v3';
+const CACHE_NAME = 'chinese-reader-v4';
 const STATIC_ASSETS = [
   'index.html',
   'css/style.css',

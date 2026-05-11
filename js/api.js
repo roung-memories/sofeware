@@ -109,6 +109,20 @@ const API = (() => {
       return _urlCache[recordingId] || '';
     },
 
+    async downloadRecording(id) {
+      const rec = await DB.recordings.getById(id);
+      if (!rec || !rec.blob) throw new Error('录音数据不存在');
+
+      const url = URL.createObjectURL(rec.blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `recording-${id}.${rec.blob.type.includes('webm') ? 'webm' : 'm4a'}`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    },
+
     async deleteRecording(id) {
       if (_urlCache[id]) {
         URL.revokeObjectURL(_urlCache[id]);
