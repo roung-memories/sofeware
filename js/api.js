@@ -116,7 +116,11 @@ const API = (() => {
       const url = URL.createObjectURL(rec.blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `recording-${id}.${rec.blob.type.includes('webm') ? 'webm' : 'm4a'}`;
+      const ext = rec.blob.type.includes('mpeg') ? 'mp3'
+        : rec.blob.type.includes('webm') ? 'webm'
+        : rec.blob.type.includes('mp4') ? 'm4a'
+        : 'mp3';
+      a.download = `recording-${id}.${ext}`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
