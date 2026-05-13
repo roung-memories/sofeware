@@ -1,7 +1,9 @@
-const CACHE_NAME = 'chinese-reader-v4';
+const CACHE_NAME = 'chinese-reader-v5';
 const STATIC_ASSETS = [
   'index.html',
   'css/style.css',
+  'js/lib/lame.min.js',
+  'js/audio-utils.js',
   'js/api.js',
   'js/db.js',
   'js/ai.js',

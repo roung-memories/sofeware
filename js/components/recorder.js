@@ -74,15 +74,16 @@ class AudioRecorder {
                 return;
             }
 
-            this.mediaRecorder.onstop = () => {
+            this.mediaRecorder.onstop = async () => {
                 this.recording = false;
                 this._releaseWakeLock();
                 this.duration = (Date.now() - this.startTime) / 1000;
-                const blob = new Blob(this.audioChunks, { type: this.mediaRecorder.mimeType });
+                const webmBlob = new Blob(this.audioChunks, { type: this.mediaRecorder.mimeType });
                 if (this.stream) {
                     this.stream.getTracks().forEach(t => t.stop());
                     this.stream = null;
                 }
+                const blob = await convertBlobToMp3(webmBlob);
                 resolve({ blob, duration: this.duration });
             };
 
